@@ -1,14 +1,15 @@
-package com.lemcoden.main.factory;
+package com.lemcoden.huarongdao.factory;
 
 import com.lemcoden.huarongdao.product.HRDBitMapOperator;
 import com.lemcoden.huarongdao.product.HRDChessOperator;
 import com.lemcoden.huarongdao.product.HRDChessPlayer;
 import com.lemcoden.main.ChessBoardStateContext;
+import com.lemcoden.main.factory.BruteForceFactory;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.main.product.ChessPlayer;
 import com.lemcoden.main.product.BitMapOperator;
 
-public class HRDBruteForceFactory implements BruteForceFactory{
+public class HRDBruteForceFactory implements BruteForceFactory {
 
     private ChessOperator chessOperator = new HRDChessOperator();
 

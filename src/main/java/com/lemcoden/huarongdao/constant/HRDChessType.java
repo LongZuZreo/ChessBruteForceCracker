@@ -1,9 +1,9 @@
-package com.lemcoden.huarongdao.common;
+package com.lemcoden.huarongdao.constant;
 
 /**
  * 棋子类型
  */
-public interface ChessType {
+public interface HRDChessType {
     //四格棋子（曹操）
     byte SIGE = 0B001;
     //两格单位（五虎将）横放

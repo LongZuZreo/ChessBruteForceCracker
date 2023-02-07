@@ -13,7 +13,7 @@ public abstract class ChessBoardStateContext {
 
     public BitMapOperator bitMapOperator;
     //存储当前所有ID
-    public HashMap<long[], Boolean> uuids = new HashMap<>();
+    public HashMap<String, Boolean> uuids = new HashMap<>();
 
     public ChessBoardStateContext(byte[][] bitMap){
         this.initBitMap = bitMap;

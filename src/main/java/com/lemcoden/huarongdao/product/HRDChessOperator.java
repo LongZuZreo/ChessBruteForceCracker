@@ -1,13 +1,14 @@
 package com.lemcoden.huarongdao.product;
 
 import com.lemcoden.huarongdao.entity.ChessPosition;
-import com.lemcoden.huarongdao.common.LocationType;
+import com.lemcoden.huarongdao.constant.HRDLocationType;
+import com.lemcoden.main.constant.LocationType;
 import com.lemcoden.main.product.ChessOperator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.lemcoden.huarongdao.common.ChessType.*;
+import static com.lemcoden.huarongdao.constant.HRDChessType.*;
 
 public class HRDChessOperator implements ChessOperator {
 
@@ -30,27 +31,28 @@ public class HRDChessOperator implements ChessOperator {
      * @return
      */
     public List<ChessPosition> getMovableChessLocate(byte[][] bitMap) {
-        return getChessLocate(bitMap, LocationType.KONGE);
+        return getChessLocate(bitMap, HRDLocationType.KONGE);
     }
 
     public List<ChessPosition> getHengFangLocate(byte[][] bitMap) {
-        return getChessLocate(bitMap, LocationType.HENGFANG);
+        return getChessLocate(bitMap, HRDLocationType.HENGFANG);
     }
 
     public List<ChessPosition> getShuFangLocate(byte[][] bitMap) {
-        return getChessLocate(bitMap, LocationType.SHUFANG);
+        return getChessLocate(bitMap, HRDLocationType.SHUFANG);
     }
 
     public List<ChessPosition> getSIGELocate(byte[][] bitMap) {
-        return getChessLocate(bitMap, LocationType.SIGE);
+        return getChessLocate(bitMap, HRDLocationType.SIGE);
     }
 
     public List<ChessPosition> getChessLocate(byte[][] bitMap, LocationType locationType) {
+        HRDLocationType hrdLocationType = (HRDLocationType) locationType;
         //空格坐标存储
         List<ChessPosition> chessPositions = new ArrayList<>();
         for (int i = 0; i < bitMap.length; i++) {
             for (int j = 0; j < bitMap[i].length; j++) {
-                switch (locationType) {
+                switch (hrdLocationType) {
                     case KONGE:
                         if (bitMap[i][j] == KONGE) {
                             chessPositions.add(new ChessPosition((short) j, (short) i));

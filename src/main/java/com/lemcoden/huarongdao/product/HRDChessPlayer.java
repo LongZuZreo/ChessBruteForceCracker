@@ -10,7 +10,7 @@ import com.lemcoden.main.product.ChessPlayer;
 
 import java.util.List;
 
-import static com.lemcoden.huarongdao.common.ChessType.*;
+import static com.lemcoden.huarongdao.constant.HRDChessType.*;
 
 public class HRDChessPlayer implements ChessPlayer {
 

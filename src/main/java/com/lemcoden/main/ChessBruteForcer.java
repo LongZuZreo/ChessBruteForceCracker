@@ -44,7 +44,7 @@ public class ChessBruteForcer extends ChessBoardStateContext {
             for (TreeNode<ChessBoardLayoutEntity> curDepthChildNode : allStepTree.popCurDepthChildNodes()) {
                 byte[][] curBitMap = curDepthChildNode.getContent().getChessBoardLayoutMap();
                 List<ChessPosition> kongGeLocate = chessOperator.getMovableChessLocate(curBitMap);
-                //获取并且验证空格位置
+                //获取并且验证可移动棋子定位
                 if (chessOperator.checkMovableChessPositions(kongGeLocate)) {
                     //走出下一步棋子，并将下一步棋子的所有可能的棋盘布局写入到树结构的叶子节点当中当中
                     chessPlayer.moveChessToNextStep(kongGeLocate, curDepthChildNode);
@@ -89,7 +89,7 @@ public class ChessBruteForcer extends ChessBoardStateContext {
 
         allStepTree.addChildNode(parentNode, childNode);
 
-        uuids.put(bitMapOperator.bitMap2Long(bitMap), true);
+        uuids.put(bitMapOperator.bitMap2IDStr(bitMap), true);
         return childNode;
     }
 

@@ -8,9 +8,9 @@ public interface BitMapOperator {
 
     String bitMap2String(byte[][] bitMap);
 
-    long[] bitMap2Long(byte[][] bitMap);
+    String bitMap2IDStr(byte[][] bitMap);
 
-    boolean checkBitMapDeadChess(byte[][] newbitMap, Map<long[], Boolean> uuids);
+    boolean checkBitMapDeadChess(byte[][] newbitMap, Map<String, Boolean> uuids);
 
 
     boolean checkMissionComplete(byte[][] newbitMap);

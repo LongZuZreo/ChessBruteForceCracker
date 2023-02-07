@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static com.lemcoden.huarongdao.common.ChessType.*;
+import static com.lemcoden.huarongdao.constant.HRDChessType.*;
 
 public class HRDBitMapOperator implements BitMapOperator {
 
@@ -25,7 +25,7 @@ public class HRDBitMapOperator implements BitMapOperator {
      * @param bitMap
      * @return
      */
-    public  long[] bitMap2Long(byte[][] bitMap) {
+    public  String bitMap2IDStr(byte[][] bitMap) {
         long[] UID = new long[]{0};
         for (int i = 0; i < bitMap.length; i++) {
             for (int j = 0; j < bitMap[i].length; j++) {
@@ -39,7 +39,7 @@ public class HRDBitMapOperator implements BitMapOperator {
                 }
             }
         }
-        return UID;
+        return String.valueOf(UID[0]);
     }
 
     /**
@@ -134,8 +134,8 @@ public class HRDBitMapOperator implements BitMapOperator {
      * @param bitMap
      * @return true 为有相同棋盘
      */
-    public boolean checkBitMapDeadChess(byte[][] bitMap, Map<long[],Boolean> uuids) {
-        long[] uuid = bitMap2Long(bitMap);
+    public boolean checkBitMapDeadChess(byte[][] bitMap, Map<String,Boolean> uuids) {
+        String uuid = bitMap2IDStr(bitMap);
         if (uuids.get(uuid) == null) {
             return false;
         }

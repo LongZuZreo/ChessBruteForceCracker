@@ -2,7 +2,7 @@ package com.lemcoden.main;
 
 import com.lemcoden.huarongdao.exception.ChessException;
 import com.lemcoden.main.factory.BruteForceFactory;
-import com.lemcoden.main.factory.HRDBruteForceFactory;
+import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
 import com.lemcoden.main.product.BitMapOperator;
 import com.lemcoden.main.product.ChessOperator;
 
