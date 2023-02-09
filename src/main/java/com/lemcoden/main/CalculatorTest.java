@@ -1,10 +1,9 @@
 package com.lemcoden.main;
 
-import com.lemcoden.huarongdao.exception.ChessException;
+import com.lemcoden.main.exception.ChessException;
 import com.lemcoden.main.factory.BruteForceFactory;
 import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
 import com.lemcoden.main.product.BitMapOperator;
-import com.lemcoden.main.product.ChessOperator;
 
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class CalculatorTest {
 
 
         BruteForceFactory bruteForceFactory = new HRDBruteForceFactory();
-        ChessOperator chessOperator = bruteForceFactory.generateChessOperator();
+
         BitMapOperator bitMapOperator = bruteForceFactory.generateBitMapOperator();
 
         //棋盘样式4*5

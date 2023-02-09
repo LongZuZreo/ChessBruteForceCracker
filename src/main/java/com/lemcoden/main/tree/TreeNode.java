@@ -1,7 +1,6 @@
-package com.lemcoden.huarongdao.tree;
+package com.lemcoden.main.tree;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

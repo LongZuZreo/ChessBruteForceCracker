@@ -1,6 +1,6 @@
 package com.lemcoden.huarongdao.product;
 
-import com.lemcoden.huarongdao.entity.ChessPosition;
+import com.lemcoden.main.entity.ChessPosition;
 import com.lemcoden.main.product.BitMapOperator;
 import com.lemcoden.main.product.ChessOperator;
 

@@ -1,4 +1,4 @@
-package com.lemcoden.huarongdao.entity;
+package com.lemcoden.main.entity;
 
 /**
  * 棋盘布局实体，包含唯一ID和棋盘布局实体，

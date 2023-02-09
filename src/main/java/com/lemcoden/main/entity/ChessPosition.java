@@ -1,4 +1,4 @@
-package com.lemcoden.huarongdao.entity;
+package com.lemcoden.main.entity;
 
 /**
  * 棋子的坐标

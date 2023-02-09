@@ -1,8 +1,8 @@
 package com.lemcoden.huarongdao.product;
 
-import com.lemcoden.huarongdao.entity.ChessBoardLayoutEntity;
-import com.lemcoden.huarongdao.entity.ChessPosition;
-import com.lemcoden.huarongdao.tree.TreeNode;
+import com.lemcoden.main.entity.ChessBoardLayoutEntity;
+import com.lemcoden.main.entity.ChessPosition;
+import com.lemcoden.main.tree.TreeNode;
 import com.lemcoden.main.ChessBoardStateContext;
 import com.lemcoden.main.product.BitMapOperator;
 import com.lemcoden.main.product.ChessOperator;

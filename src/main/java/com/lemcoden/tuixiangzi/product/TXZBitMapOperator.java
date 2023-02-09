@@ -1,6 +1,6 @@
 package com.lemcoden.tuixiangzi.product;
 
-import com.lemcoden.huarongdao.entity.ChessPosition;
+import com.lemcoden.main.entity.ChessPosition;
 import com.lemcoden.main.product.BitMapOperator;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.tuixiangzi.constant.TXZChessType;
@@ -127,7 +127,9 @@ public class TXZBitMapOperator implements BitMapOperator {
 
     @Override
     public boolean checkMissionComplete(byte[][] newbitMap) {
-        return false;
+        int boxLocationsSize = txzChessOperator.getBoxLocate(newbitMap).size();
+        int completeChessSize = txzChessOperator.getCompleteChessLocate(newbitMap).size();
+        return boxLocationsSize == completeChessSize;
     }
 
     @Override

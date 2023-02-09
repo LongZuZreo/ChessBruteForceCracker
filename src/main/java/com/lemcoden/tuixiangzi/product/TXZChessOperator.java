@@ -1,7 +1,6 @@
 package com.lemcoden.tuixiangzi.product;
 
-import com.lemcoden.huarongdao.constant.HRDLocationType;
-import com.lemcoden.huarongdao.entity.ChessPosition;
+import com.lemcoden.main.entity.ChessPosition;
 import com.lemcoden.main.constant.LocationType;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.tuixiangzi.constant.TXZLocationType;
@@ -15,11 +14,16 @@ import static com.lemcoden.tuixiangzi.constant.TXZChessType.*;
 public class TXZChessOperator implements ChessOperator {
     @Override
     public List<ChessPosition> getMovableChessLocate(byte[][] bitMap) {
-        return getChessLocate(bitMap,TXZLocationType.I);
+        return getChessLocate(bitMap, TXZLocationType.I);
     }
 
     public List<ChessPosition> getBoxLocate(byte[][] bitMap) {
-        return getChessLocate(bitMap,TXZLocationType.BOX);
+        return getChessLocate(bitMap, TXZLocationType.BOX);
+    }
+
+    public List<ChessPosition> getCompleteChessLocate(byte[][] bitMap) {
+        List<ChessPosition> chessLocate = getChessLocate(bitMap, TXZLocationType.BOX$DEST);
+        return chessLocate == null ? new ArrayList<>() : chessLocate;
     }
 
 
@@ -56,6 +60,12 @@ public class TXZChessOperator implements ChessOperator {
                             chessPositions.add(new ChessPosition((short) j, (short) i));
                         }
                         break;
+                    case BOX$DEST:
+                        if (bitMap[i][j] == (BOX ^ DEST)) {
+                            chessPositions.add(new ChessPosition((short) j, (short) i));
+                        }
+                        break;
+
                 }
 
             }
@@ -63,11 +73,11 @@ public class TXZChessOperator implements ChessOperator {
         return null;
     }
 
-    private byte removeDest(byte i) {
+    public byte removeDest(byte i) {
         return (byte) (i & 0b011);
     }
 
-    private byte removeIOrBox(byte b) {
+    public byte removeIOrBox(byte b) {
         return (byte) (b & 0B100);
     }
 }

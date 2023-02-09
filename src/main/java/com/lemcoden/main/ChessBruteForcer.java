@@ -1,10 +1,10 @@
 package com.lemcoden.main;
 
-import com.lemcoden.huarongdao.entity.ChessPosition;
-import com.lemcoden.huarongdao.entity.ChessBoardLayoutEntity;
-import com.lemcoden.huarongdao.exception.ChessException;
-import com.lemcoden.huarongdao.tree.LinkedTree;
-import com.lemcoden.huarongdao.tree.TreeNode;
+import com.lemcoden.main.entity.ChessPosition;
+import com.lemcoden.main.entity.ChessBoardLayoutEntity;
+import com.lemcoden.main.exception.ChessException;
+import com.lemcoden.main.tree.LinkedTree;
+import com.lemcoden.main.tree.TreeNode;
 import com.lemcoden.huarongdao.util.TreeResultOutUtil;
 import com.lemcoden.main.factory.BruteForceFactory;
 import com.lemcoden.main.product.ChessOperator;

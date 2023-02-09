@@ -1,4 +1,4 @@
-package com.lemcoden.huarongdao.exception;
+package com.lemcoden.main.exception;
 
 /**
  * 自定义异常

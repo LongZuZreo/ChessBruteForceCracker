@@ -1,7 +1,7 @@
 package com.lemcoden.huarongdao.util;
 
-import com.lemcoden.huarongdao.entity.ChessBoardLayoutEntity;
-import com.lemcoden.huarongdao.tree.TreeNode;
+import com.lemcoden.main.entity.ChessBoardLayoutEntity;
+import com.lemcoden.main.tree.TreeNode;
 import com.lemcoden.main.product.BitMapOperator;
 
 import java.util.Stack;

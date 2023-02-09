@@ -1,6 +1,6 @@
 package com.lemcoden.huarongdao.product;
 
-import com.lemcoden.huarongdao.entity.ChessPosition;
+import com.lemcoden.main.entity.ChessPosition;
 import com.lemcoden.huarongdao.constant.HRDLocationType;
 import com.lemcoden.main.constant.LocationType;
 import com.lemcoden.main.product.ChessOperator;
