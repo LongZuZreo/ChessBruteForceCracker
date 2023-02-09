@@ -19,18 +19,35 @@ public interface ChessOperator {
     }
 
     default byte getUpChess(byte[][] bitMap, ChessPosition chessPosition) {
-        return bitMap[chessPosition.getVertical() - 1][chessPosition.getHorizontal()];
+        return getUpChess(bitMap, chessPosition, 1);
+    }
+
+    default byte getUpChess(byte[][] bitMap, ChessPosition chessPosition, int count) {
+        return bitMap[chessPosition.getVertical() - count][chessPosition.getHorizontal()];
     }
 
     default byte getDownChess(byte[][] bitMap, ChessPosition chessPosition) {
-        return bitMap[chessPosition.getVertical() + 1][chessPosition.getHorizontal()];
+        return getDownChess(bitMap, chessPosition, 1);
     }
 
-    default byte getLeftChess(byte[][] bitMap, ChessPosition chessPosition) {
-        return bitMap[chessPosition.getVertical()][chessPosition.getHorizontal() - 1];
+
+    default byte getDownChess(byte[][] bitMap, ChessPosition chessPosition, int count) {
+        return bitMap[chessPosition.getVertical() + count][chessPosition.getHorizontal()];
+    }
+
+    default byte getLeftChess(byte[][] bitMap, ChessPosition chessPosition){
+        return getLeftChess(bitMap,chessPosition,1);
+    }
+
+    default byte getLeftChess(byte[][] bitMap, ChessPosition chessPosition, int count) {
+        return bitMap[chessPosition.getVertical()][chessPosition.getHorizontal() - count];
     }
 
     default byte getRightChess(byte[][] bitMap, ChessPosition chessPosition){
-        return bitMap[chessPosition.getVertical()][chessPosition.getHorizontal() + 1];
+        return getRightChess(bitMap,chessPosition,1);
+    }
+
+    default byte getRightChess(byte[][] bitMap, ChessPosition chessPosition, int count) {
+        return bitMap[chessPosition.getVertical()][chessPosition.getHorizontal() + count];
     }
 }

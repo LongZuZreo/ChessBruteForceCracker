@@ -1,7 +1,6 @@
 package com.lemcoden.tuixiangzi.constant;
 
 import com.lemcoden.main.constant.ChessType;
-import com.sun.deploy.xml.BadTokenException;
 
 public interface TXZChessType extends ChessType {
     byte DEST = 0B100;

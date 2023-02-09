@@ -43,11 +43,11 @@ public class ChessBruteForcer extends ChessBoardStateContext {
             //获取当前树深度的所有叶子节点
             for (TreeNode<ChessBoardLayoutEntity> curDepthChildNode : allStepTree.popCurDepthChildNodes()) {
                 byte[][] curBitMap = curDepthChildNode.getContent().getChessBoardLayoutMap();
-                List<ChessPosition> kongGeLocate = chessOperator.getMovableChessLocate(curBitMap);
+                List<ChessPosition> movableChessLocate = chessOperator.getMovableChessLocate(curBitMap);
                 //获取并且验证可移动棋子定位
-                if (chessOperator.checkMovableChessPositions(kongGeLocate)) {
+                if (chessOperator.checkMovableChessPositions(movableChessLocate)) {
                     //走出下一步棋子，并将下一步棋子的所有可能的棋盘布局写入到树结构的叶子节点当中当中
-                    chessPlayer.moveChessToNextStep(kongGeLocate, curDepthChildNode);
+                    chessPlayer.moveChessToNextStep(movableChessLocate, curDepthChildNode);
                 } else {
                     throw new ChessException("棋子空格出现问题\n" + bitMapOperator.bitMap2String(curBitMap) + "\n\n" +
                             bitMapOperator.bitMap2String(curDepthChildNode.getParentNode().getContent().getChessBoardLayoutMap()));
