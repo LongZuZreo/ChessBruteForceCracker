@@ -18,6 +18,8 @@ public class HRDFrame extends Frame {
 
     List resultList = new List();
 
+    Font font = new Font("Serif", Font.PLAIN, 25);
+
     public HRDFrame() throws HeadlessException {
         setSize(400, 600);
         setResizable(false);
@@ -87,7 +89,7 @@ public class HRDFrame extends Frame {
         Label label6 = new Label("\n英文字母o表示空格位");
 
         Button hBtn = new Button("-");
-        hBtn.setFont(new Font("Serif", Font.PLAIN, 25));
+        hBtn.setFont(font);
         hBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,7 +104,7 @@ public class HRDFrame extends Frame {
             }
         });
         Button shuBtn = new Button("|");
-        shuBtn.setFont(new Font("Serif", Font.PLAIN, 25));
+        shuBtn.setFont(font);
         shuBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,7 +116,7 @@ public class HRDFrame extends Frame {
             }
         });
         Button dBtn = new Button("·");
-        dBtn.setFont(new Font("Serif", Font.PLAIN, 25));
+        dBtn.setFont(font);
         dBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -126,7 +128,7 @@ public class HRDFrame extends Frame {
             }
         });
         Button siBtn = new Button("+");
-        siBtn.setFont(new Font("Serif", Font.PLAIN, 25));
+        siBtn.setFont(font);
         siBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -138,7 +140,7 @@ public class HRDFrame extends Frame {
             }
         });
         Button kBtn = new Button("o");
-        kBtn.setFont(new Font("Serif", Font.PLAIN, 25));
+        kBtn.setFont(font);
         kBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -169,6 +171,8 @@ public class HRDFrame extends Frame {
         btnPanel.add(siBtn);
         btnPanel.add(kBtn);
         Button confirmBtn = new Button("确认");
+        btnPanel.add(confirmBtn);
+        confirmBtn.setFont(font);
         confirmBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -187,11 +191,11 @@ public class HRDFrame extends Frame {
 
             }
         });
-        panel.add(confirmBtn);
         panel.add(btnPanel);
 
         add(textArea);
         add(panel);
+        resultList.setFont(font);
         add(resultList);
 
 

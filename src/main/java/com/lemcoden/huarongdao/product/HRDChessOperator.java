@@ -90,13 +90,13 @@ public class HRDChessOperator implements ChessOperator {
         switch (aChar){
             case '|':
                 return SHUFANG;
-            case '—':
+            case '-':
                 return HENGFANG;
             case '+':
                 return SIGE;
             case 'o':
                 return KONGE;
-            case '·':
+            case '*':
                 return YIGE;
         }
         return 0;

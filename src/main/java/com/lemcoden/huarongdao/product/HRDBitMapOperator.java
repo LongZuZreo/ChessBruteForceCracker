@@ -53,7 +53,7 @@ public class HRDBitMapOperator implements BitMapOperator {
             for (int j = 0; j < bitMap[i].length; j++) {
                 switch (bitMap[i][j]){
                     case YIGE:
-                        sb.append("· ");
+                        sb.append("* ");
                         break;
                     case SIGE:
                         sb.append("+ ");
@@ -64,7 +64,7 @@ public class HRDBitMapOperator implements BitMapOperator {
                 }
                 switch (chessOperator.LIANGEremoveID(bitMap[i][j])){
                     case HENGFANG:
-                        sb.append("— ");
+                        sb.append("- ");
                         break;
                     case SHUFANG:
                         sb.append("| ");
