@@ -19,23 +19,23 @@ public class TreeResultOutUtil {
     /**
      * 输出赢棋的所有步骤
      */
-    public static void  successAllStepOut(TreeNode<ChessBoardLayoutEntity> treeNode, BitMapOperator bitMapOperator){
-        if (!isLock){
+    public static void successAllStepOut(TreeNode<ChessBoardLayoutEntity> treeNode, BitMapOperator bitMapOperator) {
+        if (!isLock) {
             isLock = true;
-        }else{
+        } else {
             return;
         }
         Stack<ChessBoardLayoutEntity> stack = new Stack<>();
         stack.push(treeNode.getContent());
-        while (treeNode.hasParent()){
+        while (treeNode.hasParent()) {
             treeNode = treeNode.getParentNode();
             stack.push(treeNode.getContent());
         }
 
-        while (!stack.empty()){
+        while (!stack.empty()) {
             stepNum++;
             System.out.println("-------------------------------------------");
-            System.out.println("第"+stepNum+"步"+"\n");
+            System.out.println("第" + stepNum + "步" + "\n");
             ChessBoardLayoutEntity pop = stack.pop();
             String boardLayoutStr = bitMapOperator.bitMap2String(pop.getChessBoardLayoutMap());
             System.out.println(boardLayoutStr);
@@ -47,31 +47,28 @@ public class TreeResultOutUtil {
     /**
      * 输出赢棋的所有步骤
      */
-    public static void  successAllStepOut(TreeNode<ChessBoardLayoutEntity> treeNode, BitMapOperator bitMapOperator, List list){
-        if (!isLock){
+    public static void successAllStepOut(TreeNode<ChessBoardLayoutEntity> treeNode, BitMapOperator bitMapOperator, TextArea textArea) {
+        if (!isLock) {
             isLock = true;
-        }else{
+        } else {
             return;
         }
         Stack<ChessBoardLayoutEntity> stack = new Stack<>();
         stack.push(treeNode.getContent());
-        while (treeNode.hasParent()){
+        while (treeNode.hasParent()) {
             treeNode = treeNode.getParentNode();
             stack.push(treeNode.getContent());
         }
-
-        while (!stack.empty()){
+        StringBuilder sb = new StringBuilder();
+        while (!stack.empty()) {
             stepNum++;
-            list.add("-----------------------------------------------");
-            list.add("第"+stepNum+"步");
+            sb.append("-----------------------------------------------\n");
+            sb.append("第" + stepNum + "步"+"\n");
             ChessBoardLayoutEntity pop = stack.pop();
             String boardLayoutStr = bitMapOperator.bitMap2String(pop.getChessBoardLayoutMap());
-            String[] split = boardLayoutStr.split("\n");
-            for (String s : split) {
-                list.add(s);
-            }
-
+            sb.append(boardLayoutStr);
         }
+        textArea.setText(sb.toString());
 
     }
 }

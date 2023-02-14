@@ -12,7 +12,7 @@ public class ChessBruteForcerFrame extends Frame {
         setSize(500, 100);
         this.setLocation(600, 400);
         setResizable(false);
-        setTitle("±©Á¦ÆÆ½âÆ÷");
+        setTitle("æš´åŠ›ç ´è§£å™¨");
 
         addWindowListener(new WindowAdapter() {
 

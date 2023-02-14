@@ -1,39 +1,37 @@
 package com.lemcoden.huarongdao.view;
 
 import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
-import com.lemcoden.huarongdao.product.HRDBitMapOperator;
 import com.lemcoden.main.ChessBruteForcer;
 import com.lemcoden.main.exception.ChessException;
 import com.lemcoden.main.product.BitMapOperator;
+import org.w3c.dom.Text;
 
-import javax.swing.text.AttributeSet;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.html.ListView;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 
 public class HRDFrame extends Frame {
 
-    List resultList = new List();
+//    List resultList = new List();
 
     Font font = new Font("Serif", Font.PLAIN, 25);
 
     public HRDFrame() throws HeadlessException {
-        setSize(400, 600);
-        setResizable(false);
-        this.setLocation(600, 100);
+        setExtendedState(MAXIMIZED_VERT);
+        this.setLocation(600, 0);
         GridBagLayout gridBagLayout = new GridBagLayout();
         setLayout(gridBagLayout);
         setTitle("华容道暴力破解");
         Panel panel = new Panel();
         panel.setLayout(new FlowLayout());
         TextArea textArea = new TextArea();
-        textArea.setSize(100, 200);
+        TextArea resultTextArea = new TextArea();
+        resultTextArea.setFont(new Font("Serif", Font.PLAIN, 30));
+        resultTextArea.setFocusable(false);
         textArea.setFont(new Font("Serif", Font.PLAIN, 30));
         textArea.setColumns(5);
-        textArea.setRows(6);
+        textArea.setRows(5);
+
+
 
         textArea.addTextListener(new TextListener() {
             boolean isSet;
@@ -84,9 +82,9 @@ public class HRDFrame extends Frame {
 
         Label label = new Label("请在上方输入框中输入初始棋盘样式");
         Label label1 = new Label("其中，");
-        Label label2 = new Label("\n半个破折号—表示横放棋子");
+        Label label2 = new Label("\n中划线-表示横放棋子");
         Label label3 = new Label("\n竖线|表示半个竖放棋子");
-        Label label4 = new Label("\n中文圆点·表示单棋子");
+        Label label4 = new Label("\n米字*表示单棋子");
         Label label5 = new Label("\n加号+表示四个棋子");
         Label label6 = new Label("\n英文字母o表示空格位");
 
@@ -117,13 +115,13 @@ public class HRDFrame extends Frame {
                 textArea.setText(concat);
             }
         });
-        Button dBtn = new Button("·");
+        Button dBtn = new Button("*");
         dBtn.setFont(font);
         dBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textArea.getText();
-                String concat = text.concat("·");
+                String concat = text.concat("*");
                 if (text.replace("\n", "").length() >= 20) return;
                 if (text.replace("\n", "").length() % 4 == 3) concat = concat.concat("\n");
                 textArea.setText(concat);
@@ -155,7 +153,6 @@ public class HRDFrame extends Frame {
         });
 
 
-        textArea.setSize(400, 500);
 //        panel.add(textArea);
         panel.add(label);
         panel.add(label1);
@@ -165,6 +162,7 @@ public class HRDFrame extends Frame {
         panel.add(label5);
         panel.add(label6);
         panel.add(new Label("                     "));
+        panel.setLayout(new GridLayout(6,2));
         Panel btnPanel = new Panel();
         btnPanel.setLayout(new GridLayout(1, 5));
         btnPanel.add(hBtn);
@@ -184,7 +182,7 @@ public class HRDFrame extends Frame {
                 BitMapOperator bitMapOperator = hrdBruteForceFactory.generateBitMapOperator();
                 byte[][] bitMap = bitMapOperator.string2BitMap(bitMapStr);
                 ChessBruteForcer chessBruteForcer = new ChessBruteForcer(bitMap, hrdBruteForceFactory);
-                chessBruteForcer.setListView(resultList);
+                chessBruteForcer.setOutView(resultTextArea);
                 try {
                     chessBruteForcer.caculateRun();
                 } catch (ChessException ex) {
@@ -199,24 +197,23 @@ public class HRDFrame extends Frame {
         gb.gridx=0;
         gb.gridy=0;
         gb.weighty=1.0;
-        gb.weightx=0.5;
+        gb.weightx=GridBagConstraints.REMAINDER;
         gridBagLayout.setConstraints(textArea,gb);
         add(textArea,gb);
         gb.fill = GridBagConstraints.VERTICAL;
         gb.gridx=0;
         gb.gridy=1;
         gb.weighty=1.0;
-        gb.weightx=0.5;
+        gb.weightx=GridBagConstraints.REMAINDER;
         gridBagLayout.setConstraints(panel,gb);
         add(panel,gb);
-        resultList.setFont(font);
         gb.fill = GridBagConstraints.BOTH;
         gb.gridx=0;
         gb.gridy=3;
-        gb.weighty=2.0;
-        gb.weightx=0.5;
-        gridBagLayout.setConstraints(resultList,gb);
-        add(resultList,gb);
+        gb.weighty=6.0;
+        gb.weightx=GridBagConstraints.REMAINDER;
+        gridBagLayout.setConstraints(resultTextArea,gb);
+        add(resultTextArea,gb);
 
 
         addWindowListener(new WindowAdapter() {

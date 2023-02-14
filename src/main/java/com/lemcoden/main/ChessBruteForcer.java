@@ -10,6 +10,7 @@ import com.lemcoden.main.factory.BruteForceFactory;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.main.product.ChessPlayer;
 
+import java.awt.*;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class ChessBruteForcer extends ChessBoardStateContext {
     private final LinkedTree<ChessBoardLayoutEntity> allStepTree;
     private final ChessPlayer chessPlayer;
     private final ChessOperator chessOperator;
-    private java.awt.List list;
+    private TextArea textArea;
 
     public ChessBruteForcer(byte[][] bitMap, BruteForceFactory bruteForceFactory) {
         super(bitMap);
@@ -72,10 +73,10 @@ public class ChessBruteForcer extends ChessBoardStateContext {
 
 
     public void outPutAllStep(TreeNode<ChessBoardLayoutEntity> treeNode) {
-        if (list == null) {
+        if (textArea == null) {
             TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator);
         }else{
-            TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator, list);
+            TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator, textArea);
         }
     }
 
@@ -98,7 +99,7 @@ public class ChessBruteForcer extends ChessBoardStateContext {
         return childNode;
     }
 
-    public void setListView(java.awt.List list) {
-        this.list = list;
+    public void setOutView(TextArea textArea) {
+        this.textArea = textArea;
     }
 }
