@@ -24,9 +24,11 @@ public class HRDFrame extends Frame {
         setSize(400, 600);
         setResizable(false);
         this.setLocation(600, 100);
-        setLayout(new GridLayout(3,1));
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        setLayout(gridBagLayout);
         setTitle("华容道暴力破解");
         Panel panel = new Panel();
+        panel.setLayout(new FlowLayout());
         TextArea textArea = new TextArea();
         textArea.setSize(100, 200);
         textArea.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -191,12 +193,30 @@ public class HRDFrame extends Frame {
 
             }
         });
+        GridBagConstraints gb = new GridBagConstraints();
         panel.add(btnPanel);
-
-        add(textArea);
-        add(panel);
+        gb.fill = GridBagConstraints.BOTH;
+        gb.gridx=0;
+        gb.gridy=0;
+        gb.weighty=1.0;
+        gb.weightx=0.5;
+        gridBagLayout.setConstraints(textArea,gb);
+        add(textArea,gb);
+        gb.fill = GridBagConstraints.VERTICAL;
+        gb.gridx=0;
+        gb.gridy=1;
+        gb.weighty=1.0;
+        gb.weightx=0.5;
+        gridBagLayout.setConstraints(panel,gb);
+        add(panel,gb);
         resultList.setFont(font);
-        add(resultList);
+        gb.fill = GridBagConstraints.BOTH;
+        gb.gridx=0;
+        gb.gridy=3;
+        gb.weighty=2.0;
+        gb.weightx=0.5;
+        gridBagLayout.setConstraints(resultList,gb);
+        add(resultList,gb);
 
 
         addWindowListener(new WindowAdapter() {
@@ -207,6 +227,7 @@ public class HRDFrame extends Frame {
             }
 
         });
+        pack();
     }
 
 
