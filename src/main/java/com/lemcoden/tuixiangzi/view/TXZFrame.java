@@ -1,4 +1,4 @@
-package com.lemcoden.main.view;
+package com.lemcoden.tuixiangzi.view;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;

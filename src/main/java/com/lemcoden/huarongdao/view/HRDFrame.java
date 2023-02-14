@@ -1,4 +1,10 @@
-package com.lemcoden.main.view;
+package com.lemcoden.huarongdao.view;
+
+import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
+import com.lemcoden.huarongdao.product.HRDBitMapOperator;
+import com.lemcoden.main.ChessBruteForcer;
+import com.lemcoden.main.exception.ChessException;
+import com.lemcoden.main.product.BitMapOperator;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.Document;
@@ -7,14 +13,16 @@ import javax.swing.text.html.ListView;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
-import java.util.List;
 
 public class HRDFrame extends Frame {
 
+    List resultList = new List();
+
     public HRDFrame() throws HeadlessException {
-        setSize(800, 500);
+        setSize(400, 600);
         setResizable(false);
-        this.setLocation(600, 400);
+        this.setLocation(600, 100);
+        setLayout(new GridLayout(3,1));
         setTitle("华容道暴力破解");
         Panel panel = new Panel();
         TextArea textArea = new TextArea();
@@ -22,6 +30,7 @@ public class HRDFrame extends Frame {
         textArea.setFont(new Font("Serif", Font.PLAIN, 30));
         textArea.setColumns(5);
         textArea.setRows(6);
+
         textArea.addTextListener(new TextListener() {
             boolean isSet;
             int lastCaretPosition;
@@ -41,19 +50,20 @@ public class HRDFrame extends Frame {
                         String newText = oldText.replace("\n", "");
 
                         char[] chars = newText.toCharArray();
+                        char[] oldChars = oldText.toCharArray();
 
                         StringBuilder sb = new StringBuilder();
-                        if (chars.length < 25) {
-                            for (int i = 0; i < chars.length; i++) {
-                                if (i % 4 == 3) {
-                                    sb = sb.append(chars[i]).append("\n");
-                                } else {
-                                    sb = sb.append(chars[i]);
-                                }
+                        for (int i = 0; i < chars.length; i++) {
+                            if (i >= 20) {
+                                break;
                             }
-                        }else{
-                            sb.append(Arrays.copyOf(chars,24));
+                            if (i % 4 == 3) {
+                                sb = sb.append(chars[i]).append("\n");
+                            } else {
+                                sb = sb.append(chars[i]);
+                            }
                         }
+
 
                         newText = sb.toString();
                         lastCaretPosition = textArea.getCaretPosition();
@@ -68,7 +78,7 @@ public class HRDFrame extends Frame {
             }
         });
 
-        Label label = new Label("请在左边输入框中输入初始棋盘样式");
+        Label label = new Label("请在上方输入框中输入初始棋盘样式");
         Label label1 = new Label("其中，");
         Label label2 = new Label("\n半个破折号—表示横放棋子");
         Label label3 = new Label("\n竖线|表示半个竖放棋子");
@@ -142,7 +152,7 @@ public class HRDFrame extends Frame {
 
 
         textArea.setSize(400, 500);
-        panel.add(textArea);
+//        panel.add(textArea);
         panel.add(label);
         panel.add(label1);
         panel.add(label2);
@@ -158,9 +168,32 @@ public class HRDFrame extends Frame {
         btnPanel.add(dBtn);
         btnPanel.add(siBtn);
         btnPanel.add(kBtn);
+        Button confirmBtn = new Button("确认");
+        confirmBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String bitMapStr = textArea.getText();
+
+                HRDBruteForceFactory hrdBruteForceFactory = new HRDBruteForceFactory();
+                BitMapOperator bitMapOperator = hrdBruteForceFactory.generateBitMapOperator();
+                byte[][] bitMap = bitMapOperator.string2BitMap(bitMapStr);
+                ChessBruteForcer chessBruteForcer = new ChessBruteForcer(bitMap, hrdBruteForceFactory);
+                chessBruteForcer.setListView(resultList);
+                try {
+                    chessBruteForcer.caculateRun();
+                } catch (ChessException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+        panel.add(confirmBtn);
         panel.add(btnPanel);
 
+        add(textArea);
         add(panel);
+        add(resultList);
+
 
         addWindowListener(new WindowAdapter() {
 

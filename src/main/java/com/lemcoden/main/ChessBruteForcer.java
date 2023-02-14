@@ -5,7 +5,7 @@ import com.lemcoden.main.entity.ChessBoardLayoutEntity;
 import com.lemcoden.main.exception.ChessException;
 import com.lemcoden.main.tree.LinkedTree;
 import com.lemcoden.main.tree.TreeNode;
-import com.lemcoden.huarongdao.util.TreeResultOutUtil;
+import com.lemcoden.main.util.TreeResultOutUtil;
 import com.lemcoden.main.factory.BruteForceFactory;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.main.product.ChessPlayer;
@@ -22,14 +22,15 @@ public class ChessBruteForcer extends ChessBoardStateContext {
     private final LinkedTree<ChessBoardLayoutEntity> allStepTree;
     private final ChessPlayer chessPlayer;
     private final ChessOperator chessOperator;
+    private java.awt.List list;
 
     public ChessBruteForcer(byte[][] bitMap, BruteForceFactory bruteForceFactory) {
         super(bitMap);
+        bitMapOperator = bruteForceFactory.generateBitMapOperator();
         System.out.println("初始棋盘\n" + bitMapOperator.bitMap2String(bitMap));
         //初始化树结构，设置初始棋盘
         allStepTree = new LinkedTree(new ChessBoardLayoutEntity(bitMap));
         //初始化棋盘操作器，棋手（用于移动棋子），棋子操作器
-        bitMapOperator = bruteForceFactory.generateBitMapOperator();
         chessPlayer = bruteForceFactory.generateChessPlayer(this);
         chessOperator  = bruteForceFactory.generateChessOperator();
     }
@@ -71,7 +72,11 @@ public class ChessBruteForcer extends ChessBoardStateContext {
 
 
     public void outPutAllStep(TreeNode<ChessBoardLayoutEntity> treeNode) {
-        TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator);
+        if (list == null) {
+            TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator);
+        }else{
+            TreeResultOutUtil.successAllStepOut(treeNode, bitMapOperator, list);
+        }
     }
 
     /**
@@ -93,5 +98,7 @@ public class ChessBruteForcer extends ChessBoardStateContext {
         return childNode;
     }
 
-
+    public void setListView(java.awt.List list) {
+        this.list = list;
+    }
 }

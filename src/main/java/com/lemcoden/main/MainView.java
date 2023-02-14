@@ -1,18 +1,12 @@
 package com.lemcoden.main;
 
-import com.lemcoden.main.exception.ChessException;
-import com.lemcoden.main.factory.BruteForceFactory;
-import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
-import com.lemcoden.main.product.BitMapOperator;
 import com.lemcoden.main.view.ChessBruteForcerFrame;
-import com.lemcoden.main.view.HRDFrame;
-import com.lemcoden.main.view.TXZFrame;
+import com.lemcoden.huarongdao.view.HRDFrame;
+import com.lemcoden.tuixiangzi.view.TXZFrame;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextLayout;
-import java.util.Scanner;
 
 /**
  * 测试程序
