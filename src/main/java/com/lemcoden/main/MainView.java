@@ -52,29 +52,6 @@ public class MainView {
                 hrdFrame.setVisible(true);
             }
         });
-//
-//        //棋盘样式4*5
-//        Scanner scanner = new Scanner(System.in);
-//
-//        BruteForceFactory bruteForceFactory = new HRDBruteForceFactory();
-//
-//        BitMapOperator bitMapOperator = bruteForceFactory.generateBitMapOperator();
-//
-//        StringBuilder sb = new StringBuilder();
-//        byte[][] bitMap = null;
-//        for (int i = 0; i < 5; i++) {
-//            System.out.println("请输入第" + (i + 1) + "行");
-//            sb = sb.append(scanner.nextLine()).append("\n");
-//        }
-//
-//        bitMap = bitMapOperator.string2BitMap(sb.toString());
-//
-//        ChessBruteForcer chessBruteForcer = new ChessBruteForcer(bitMap, bruteForceFactory);
-//        try {
-//            chessBruteForcer.caculateRun();
-//        } catch (ChessException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

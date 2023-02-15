@@ -4,20 +4,19 @@ import com.lemcoden.huarongdao.factory.HRDBruteForceFactory;
 import com.lemcoden.main.ChessBruteForcer;
 import com.lemcoden.main.exception.ChessException;
 import com.lemcoden.main.product.BitMapOperator;
-import org.w3c.dom.Text;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class HRDFrame extends Frame {
-
-//    List resultList = new List();
 
     Font font = new Font("Serif", Font.PLAIN, 25);
 
     public HRDFrame() throws HeadlessException {
-        setExtendedState(MAXIMIZED_VERT);
-        this.setLocation(600, 0);
+        setExtendedState(MAXIMIZED_BOTH);
         GridBagLayout gridBagLayout = new GridBagLayout();
         setLayout(gridBagLayout);
         setTitle("华容道暴力破解");
@@ -30,7 +29,6 @@ public class HRDFrame extends Frame {
         textArea.setFont(new Font("Serif", Font.PLAIN, 30));
         textArea.setColumns(5);
         textArea.setRows(5);
-
 
 
         textArea.addTextListener(new TextListener() {
@@ -152,8 +150,6 @@ public class HRDFrame extends Frame {
             }
         });
 
-
-//        panel.add(textArea);
         panel.add(label);
         panel.add(label1);
         panel.add(label2);
@@ -162,58 +158,117 @@ public class HRDFrame extends Frame {
         panel.add(label5);
         panel.add(label6);
         panel.add(new Label("                     "));
-        panel.setLayout(new GridLayout(6,2));
+        panel.setLayout(new GridLayout(6, 2));
         Panel btnPanel = new Panel();
-        btnPanel.setLayout(new GridLayout(1, 5));
+        btnPanel.setLayout(new GridLayout(1, 6));
         btnPanel.add(hBtn);
         btnPanel.add(shuBtn);
         btnPanel.add(dBtn);
         btnPanel.add(siBtn);
         btnPanel.add(kBtn);
         Button confirmBtn = new Button("确认");
-        btnPanel.add(confirmBtn);
         confirmBtn.setFont(font);
-        confirmBtn.addActionListener(new ActionListener() {
+        confirmBtn.addActionListener(e -> {
+            String bitMapStr = textArea.getText();
+
+            HRDBruteForceFactory hrdBruteForceFactory = new HRDBruteForceFactory();
+            BitMapOperator bitMapOperator = hrdBruteForceFactory.generateBitMapOperator();
+            byte[][] bitMap = bitMapOperator.string2BitMap(bitMapStr);
+            ChessBruteForcer chessBruteForcer = new ChessBruteForcer(bitMap, hrdBruteForceFactory);
+            chessBruteForcer.setOutView(resultTextArea);
+            try {
+                chessBruteForcer.caculateRun();
+            } catch (ChessException ex) {
+                ex.printStackTrace();
+            }
+
+        });
+        btnPanel.add(confirmBtn);
+        MenuBar menuBar = new MenuBar();
+        FileDialog fileDialog = new FileDialog(this, "保存文件");
+        Menu menu = new Menu("选项");
+        menuBar.add(menu);
+        MenuItem menuItem = new MenuItem("保存结果到文件");
+        menu.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String bitMapStr = textArea.getText();
 
-                HRDBruteForceFactory hrdBruteForceFactory = new HRDBruteForceFactory();
-                BitMapOperator bitMapOperator = hrdBruteForceFactory.generateBitMapOperator();
-                byte[][] bitMap = bitMapOperator.string2BitMap(bitMapStr);
-                ChessBruteForcer chessBruteForcer = new ChessBruteForcer(bitMap, hrdBruteForceFactory);
-                chessBruteForcer.setOutView(resultTextArea);
+
+                fileDialog.setMode(FileDialog.SAVE);
+                fileDialog.setFile("华容道暴破结果.txt");
+                fileDialog.setVisible(true);
+                String directory = fileDialog.getDirectory();
+                String file = fileDialog.getFile();
+                String text = resultTextArea.getText();
                 try {
-                    chessBruteForcer.caculateRun();
-                } catch (ChessException ex) {
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(directory, file));
+                    fileOutputStream.write(text.getBytes(StandardCharsets.UTF_8));
+                    fileOutputStream.close();
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
             }
         });
+
+        setMenuBar(menuBar);
+        Button clearBtn = new Button("清空所有");
+        clearBtn.setFont(font);
+        clearBtn.addActionListener(e -> {
+            textArea.setText("");
+            resultTextArea.setText("");
+        });
+        btnPanel.add(clearBtn);
+
+        Panel bitMapSizePanel = new Panel();
+        TextField rowsField =new TextField();
+        rowsField.addTextListener(new TextListener() {
+            @Override
+            public void textValueChanged(TextEvent e) {
+                String text = rowsField.getText();
+                char[] chars = text.toCharArray();
+                for (char aChar : chars) {
+                    if (!Character.isDigit(aChar)){
+
+                    }
+                }
+            }
+        });
+
+
+        Button btn = new Button("更新");
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+
         GridBagConstraints gb = new GridBagConstraints();
         panel.add(btnPanel);
         gb.fill = GridBagConstraints.BOTH;
-        gb.gridx=0;
-        gb.gridy=0;
-        gb.weighty=1.0;
-        gb.weightx=GridBagConstraints.REMAINDER;
-        gridBagLayout.setConstraints(textArea,gb);
-        add(textArea,gb);
+        gb.gridx = 0;
+        gb.gridy = 0;
+        gb.weighty = 1.0;
+        gb.weightx = GridBagConstraints.REMAINDER;
+        gridBagLayout.setConstraints(textArea, gb);
+        add(textArea, gb);
         gb.fill = GridBagConstraints.VERTICAL;
-        gb.gridx=0;
-        gb.gridy=1;
-        gb.weighty=1.0;
-        gb.weightx=GridBagConstraints.REMAINDER;
-        gridBagLayout.setConstraints(panel,gb);
-        add(panel,gb);
+        gb.gridx = 0;
+        gb.gridy = 1;
+        gb.weighty = 1.0;
+        gb.weightx = GridBagConstraints.REMAINDER;
+        gridBagLayout.setConstraints(panel, gb);
+        add(panel, gb);
         gb.fill = GridBagConstraints.BOTH;
-        gb.gridx=0;
-        gb.gridy=3;
-        gb.weighty=6.0;
-        gb.weightx=GridBagConstraints.REMAINDER;
-        gridBagLayout.setConstraints(resultTextArea,gb);
-        add(resultTextArea,gb);
+        gb.gridx = 0;
+        gb.gridy = 3;
+        gb.weighty = 6.0;
+        gb.weightx = GridBagConstraints.REMAINDER;
+        gridBagLayout.setConstraints(resultTextArea, gb);
+        add(resultTextArea, gb);
 
 
         addWindowListener(new WindowAdapter() {
