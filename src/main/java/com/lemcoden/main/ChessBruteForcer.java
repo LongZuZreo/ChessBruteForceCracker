@@ -36,14 +36,21 @@ public class ChessBruteForcer extends ChessBoardStateContext {
         chessOperator  = bruteForceFactory.generateChessOperator();
     }
 
+    int n;
+    int m;
     /**
      * 运行破解程序
      * @throws ChessException
      */
     public void caculateRun() throws ChessException {
+        n++;
         while (!isMissionComplete) {
+            System.out.println("第"+n+"层");
+            m=1;
             //获取当前树深度的所有叶子节点
             for (TreeNode<ChessBoardLayoutEntity> curDepthChildNode : allStepTree.popCurDepthChildNodes()) {
+                System.out.println("第"+m+"个");
+                System.out.println(bitMapOperator.bitMap2String(curDepthChildNode.getContent().getChessBoardLayoutMap()));
                 byte[][] curBitMap = curDepthChildNode.getContent().getChessBoardLayoutMap();
                 List<ChessPosition> movableChessLocate = chessOperator.getMovableChessLocate(curBitMap);
                 //获取并且验证可移动棋子定位
@@ -54,7 +61,9 @@ public class ChessBruteForcer extends ChessBoardStateContext {
                     throw new ChessException("棋子空格出现问题\n" + bitMapOperator.bitMap2String(curBitMap) + "\n\n" +
                             bitMapOperator.bitMap2String(curDepthChildNode.getParentNode().getContent().getChessBoardLayoutMap()));
                 }
+                m++;
             }
+            n++;
         }
 
     }

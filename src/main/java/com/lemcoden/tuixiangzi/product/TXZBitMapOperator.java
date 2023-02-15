@@ -106,7 +106,7 @@ public class TXZBitMapOperator implements BitMapOperator {
             sb = sb.append(new String(newbitMap[0]));
         }
         //判断是否有重复棋盘
-        if (uuids != null && uuids.get(sb.toString())) {
+        if (uuids.get(sb.toString()) != null && uuids.get(sb.toString())) {
             return true;
         }
         //判断棋盘中箱子是否卡死

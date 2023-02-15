@@ -70,7 +70,7 @@ public class TXZChessOperator implements ChessOperator {
 
             }
         }
-        return null;
+        return chessPositions;
     }
 
     public byte removeDest(byte i) {

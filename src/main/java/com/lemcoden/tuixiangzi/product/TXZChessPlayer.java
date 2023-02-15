@@ -33,13 +33,14 @@ public class TXZChessPlayer implements ChessPlayer {
         byte[][] chessBoardLayoutMap = parentNode.getContent().getChessBoardLayoutMap();
         byte iChess = chessOperator.getChess(chessBoardLayoutMap, iChessPosition);
         byte upChess = chessOperator.getUpChess(chessBoardLayoutMap, iChessPosition);
-        byte upUpChess = chessOperator.getUpChess(chessBoardLayoutMap, iChessPosition, 2);
-        byte downChess = chessOperator.getDownChess(chessBoardLayoutMap, iChessPosition);
-        byte downDownChess = chessOperator.getDownChess(chessBoardLayoutMap, iChessPosition, 2);
         byte leftChess = chessOperator.getLeftChess(chessBoardLayoutMap, iChessPosition);
-        byte leftLeftChess = chessOperator.getLeftChess(chessBoardLayoutMap, iChessPosition, 2);
         byte rightChess = chessOperator.getRightChess(chessBoardLayoutMap, iChessPosition);
-        byte rightRightChess = chessOperator.getRightChess(chessBoardLayoutMap, iChessPosition, 2);
+        byte downChess = chessOperator.getDownChess(chessBoardLayoutMap, iChessPosition);
+        byte upUpChess = 0;
+        byte downDownChess = 0;
+        byte leftLeftChess = 0;
+        byte rightRightChess = 0;
+
 
         //判断上方有没有棋子并移动
         if (upChess == TXZChessType.SPACE || chessOperator.removeIOrBox(upChess) == TXZChessType.DEST) {
@@ -48,7 +49,7 @@ public class TXZChessPlayer implements ChessPlayer {
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         } else if (upChess == TXZChessType.BOX &&
-                (upUpChess == TXZChessType.SPACE
+                ((upUpChess = chessOperator.getUpChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || upUpChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
             newBitMap[iChessPosition.getVertical() - 2][iChessPosition.getHorizontal()] = (byte) (upChess ^ upUpChess);
@@ -61,11 +62,11 @@ public class TXZChessPlayer implements ChessPlayer {
         //判断下方有没有棋子并移动
         if (downChess == TXZChessType.SPACE || chessOperator.removeIOrBox(downChess) == TXZChessType.DEST) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (iChess ^ upChess);
+            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (iChess ^ downChess);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         } else if (downChess == TXZChessType.BOX &&
-                (downDownChess == TXZChessType.SPACE
+                ((downDownChess = chessOperator.getDownChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || downDownChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
             newBitMap[iChessPosition.getVertical() + 2][iChessPosition.getHorizontal()] = (byte) (downChess ^ downDownChess);
@@ -82,7 +83,7 @@ public class TXZChessPlayer implements ChessPlayer {
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         } else if (leftChess == TXZChessType.BOX &&
-                (leftLeftChess == TXZChessType.SPACE
+                ((leftLeftChess = chessOperator.getLeftChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || leftLeftChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 2] = (byte) (leftChess ^ leftLeftChess);
@@ -98,7 +99,7 @@ public class TXZChessPlayer implements ChessPlayer {
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         } else if (rightChess == TXZChessType.BOX &&
-                (rightRightChess == TXZChessType.SPACE
+                ((rightRightChess = chessOperator.getRightChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || rightRightChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 2] = (byte) (rightChess ^ rightRightChess);
