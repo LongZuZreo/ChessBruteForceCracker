@@ -71,4 +71,8 @@ public class TreeResultOutUtil {
         textArea.setText(sb.toString());
 
     }
+
+    public static void deadOut(String dead,TextArea textArea) {
+        textArea.setText(dead);
+    }
 }

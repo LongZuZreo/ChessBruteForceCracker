@@ -48,7 +48,13 @@ public class ChessBruteForcer extends ChessBoardStateContext {
             System.out.println("第"+n+"层");
             m=1;
             //获取当前树深度的所有叶子节点
-            for (TreeNode<ChessBoardLayoutEntity> curDepthChildNode : allStepTree.popCurDepthChildNodes()) {
+            List<TreeNode<ChessBoardLayoutEntity>> treeNodes = allStepTree.popCurDepthChildNodes();
+            if (treeNodes.size() == 0){
+                isMissionComplete =  true;
+                TreeResultOutUtil.deadOut("该棋盘无解",textArea);
+            }
+
+            for (TreeNode<ChessBoardLayoutEntity> curDepthChildNode :treeNodes) {
                 System.out.println("第"+m+"个");
                 System.out.println(bitMapOperator.bitMap2String(curDepthChildNode.getContent().getChessBoardLayoutMap()));
                 byte[][] curBitMap = curDepthChildNode.getContent().getChessBoardLayoutMap();

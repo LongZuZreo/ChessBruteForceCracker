@@ -8,7 +8,7 @@ import com.lemcoden.tuixiangzi.constant.TXZChessType;
 import java.util.List;
 import java.util.Map;
 
-import static com.lemcoden.tuixiangzi.constant.TXZChessType.WALL;
+import static com.lemcoden.tuixiangzi.constant.TXZChessType.*;
 
 public class TXZBitMapOperator implements BitMapOperator {
 
@@ -35,7 +35,7 @@ public class TXZBitMapOperator implements BitMapOperator {
                         bitMap[i][j] = WALL;
                         break;
                     case '#':
-                        bitMap[i][j] = TXZChessType.BOX;
+                        bitMap[i][j] = BOX;
                         break;
                     case '?':
                         bitMap[i][j] = TXZChessType.DEST;
@@ -47,7 +47,7 @@ public class TXZBitMapOperator implements BitMapOperator {
                         bitMap[i][j] = TXZChessType.I ^ TXZChessType.DEST;
                         break;
                     case '*':
-                        bitMap[i][j] = TXZChessType.BOX ^ TXZChessType.DEST;
+                        bitMap[i][j] = BOX ^ TXZChessType.DEST;
                         break;
                 }
             }
@@ -68,7 +68,7 @@ public class TXZBitMapOperator implements BitMapOperator {
                     case WALL:
                         sb.append("M");
                         break;
-                    case TXZChessType.BOX:
+                    case BOX:
                         sb.append("#");
                         break;
                     case TXZChessType.DEST:
@@ -80,7 +80,7 @@ public class TXZBitMapOperator implements BitMapOperator {
                     case TXZChessType.I ^ TXZChessType.DEST:
                         sb.append("!");
                         break;
-                    case TXZChessType.BOX ^ TXZChessType.DEST:
+                    case BOX ^ TXZChessType.DEST:
                         sb.append("*");
                         break;
                 }
@@ -101,23 +101,22 @@ public class TXZBitMapOperator implements BitMapOperator {
 
     @Override
     public boolean checkBitMapDeadChess(byte[][] newbitMap, Map<String, Boolean> uuids) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < newbitMap.length; i++) {
-            sb = sb.append(new String(newbitMap[0]));
-        }
         //判断是否有重复棋盘
-        if (uuids.get(sb.toString()) != null && uuids.get(sb.toString())) {
+        if (uuids.get(bitMap2IDStr(newbitMap)) != null) {
             return true;
         }
         //判断棋盘中箱子是否卡死
         List<ChessPosition> boxLocates = txzChessOperator.getBoxLocate(newbitMap);
         for (ChessPosition boxLocate : boxLocates) {
+            if (newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal()] == (BOX ^ DEST)){
+                continue;
+            }
             if (newbitMap[boxLocate.getVertical() + 1][boxLocate.getHorizontal()] == WALL &&
-                    (newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() + 1] == WALL || newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() - 1] == WALL)) {
+                    ((newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() + 1] == WALL || newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() - 1] == WALL))) {
                 return true;
             }
             if ((newbitMap[boxLocate.getVertical() - 1][boxLocate.getHorizontal()] == WALL) &&
-                    (newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() + 1] == WALL || newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() - 1] == WALL)) {
+                    ((newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() + 1] == WALL || newbitMap[boxLocate.getVertical()][boxLocate.getHorizontal() - 1] == WALL))) {
                 return true;
             }
         }

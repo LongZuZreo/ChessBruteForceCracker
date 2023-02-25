@@ -8,6 +8,7 @@ import com.lemcoden.main.tree.TreeNode;
 import com.lemcoden.main.ChessBoardStateContext;
 import com.lemcoden.main.product.ChessOperator;
 import com.lemcoden.main.product.ChessPlayer;
+import com.lemcoden.main.util.TreeResultOutUtil;
 import com.lemcoden.tuixiangzi.constant.TXZChessType;
 
 import java.util.HashMap;
@@ -43,67 +44,67 @@ public class TXZChessPlayer implements ChessPlayer {
 
 
         //判断上方有没有棋子并移动
-        if (upChess == TXZChessType.SPACE || chessOperator.removeIOrBox(upChess) == TXZChessType.DEST) {
+        if (upChess == TXZChessType.SPACE || upChess == TXZChessType.DEST) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical() - 1][iChessPosition.getHorizontal()] = (byte) (iChess ^ upChess);
+            newBitMap[iChessPosition.getVertical() - 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeDest(iChess) ^ upChess);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
-        } else if (upChess == TXZChessType.BOX &&
+        } else if (chessOperator.removeDest(upChess) == TXZChessType.BOX &&
                 ((upUpChess = chessOperator.getUpChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || upUpChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical() - 2][iChessPosition.getHorizontal()] = (byte) (upChess ^ upUpChess);
-            newBitMap[iChessPosition.getVertical() - 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeIOrBox(upChess) ^ iChess);
+            newBitMap[iChessPosition.getVertical() - 2][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeDest(upChess) ^ upUpChess);
+            newBitMap[iChessPosition.getVertical() - 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeIOrBox(upChess) ^ chessOperator.removeDest(iChess));
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         }
 
 
         //判断下方有没有棋子并移动
-        if (downChess == TXZChessType.SPACE || chessOperator.removeIOrBox(downChess) == TXZChessType.DEST) {
+        if (downChess == TXZChessType.SPACE || downChess == TXZChessType.DEST) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (iChess ^ downChess);
+            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeDest(iChess) ^ downChess);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
-        } else if (downChess == TXZChessType.BOX &&
+        } else if (chessOperator.removeDest(downChess) == TXZChessType.BOX &&
                 ((downDownChess = chessOperator.getDownChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || downDownChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical() + 2][iChessPosition.getHorizontal()] = (byte) (downChess ^ downDownChess);
-            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeIOrBox(downChess) ^ iChess);
+            newBitMap[iChessPosition.getVertical() + 2][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeDest(downChess) ^ downDownChess);
+            newBitMap[iChessPosition.getVertical() + 1][iChessPosition.getHorizontal()] = (byte) (chessOperator.removeIOrBox(downChess) ^ chessOperator.removeDest(iChess));
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         }
 
 
         //判断左边方有没有棋子并移动
-        if (leftChess == TXZChessType.SPACE || chessOperator.removeIOrBox(leftChess) == TXZChessType.DEST) {
+        if (leftChess == TXZChessType.SPACE || leftChess == TXZChessType.DEST) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 1] = (byte) (iChess ^ leftChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 1] = (byte) (chessOperator.removeDest(iChess) ^ leftChess);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
-        } else if (leftChess == TXZChessType.BOX &&
+        } else if (chessOperator.removeDest(leftChess) == TXZChessType.BOX &&
                 ((leftLeftChess = chessOperator.getLeftChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || leftLeftChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 2] = (byte) (leftChess ^ leftLeftChess);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 1] = (byte) (chessOperator.removeIOrBox(leftChess) ^ iChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 2] = (byte) (chessOperator.removeDest(leftChess) ^ leftLeftChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 1] = (byte) (chessOperator.removeIOrBox(leftChess) ^ chessOperator.removeDest(iChess));
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         }
 
         //判断右边有没有棋子并移动
-        if (rightChess == TXZChessType.SPACE || chessOperator.removeIOrBox(rightChess) == TXZChessType.DEST) {
+        if (rightChess == TXZChessType.SPACE || rightChess == TXZChessType.DEST) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() - 1] = (byte) (iChess ^ rightChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 1] = (byte) (chessOperator.removeDest(iChess) ^ rightChess);
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
-        } else if (rightChess == TXZChessType.BOX &&
+        } else if (chessOperator.removeDest(rightChess) == TXZChessType.BOX &&
                 ((rightRightChess = chessOperator.getRightChess(chessBoardLayoutMap, iChessPosition, 2)) == TXZChessType.SPACE
                         || rightRightChess == TXZChessType.DEST)) {
             byte[][] newBitMap = bitMapOperator.cloneBitMap(chessBoardLayoutMap);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 2] = (byte) (rightChess ^ rightRightChess);
-            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 1] = (byte) (chessOperator.removeIOrBox(rightChess) ^ iChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 2] = (byte) (chessOperator.removeDest(rightChess) ^ rightRightChess);
+            newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal() + 1] = (byte) (chessOperator.removeIOrBox(rightChess) ^ chessOperator.removeDest(iChess));
             newBitMap[iChessPosition.getVertical()][iChessPosition.getHorizontal()] = chessOperator.removeIOrBox(iChess);
             if (checkSuccessOrToNextStep(parentNode, newBitMap)) return;
         }

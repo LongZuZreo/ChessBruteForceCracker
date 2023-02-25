@@ -78,6 +78,9 @@ public class TXZChessOperator implements ChessOperator {
     }
 
     public byte removeIOrBox(byte b) {
+        if (b == WALL) {
+            return b;
+        }
         return (byte) (b & 0B100);
     }
 }
